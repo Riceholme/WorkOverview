@@ -40,7 +40,7 @@ namespace RestAPI.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, " Error to get Data from Database....");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error to get data...");
             }
 
         }
@@ -63,7 +63,7 @@ namespace RestAPI.Controllers
             }
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<Employee>> UpdateInterest(int id, Employee employee)
+        public async Task<ActionResult<Employee>> UpdateEmployee(int id, Employee employee)
         {
             try
             {
@@ -80,7 +80,26 @@ namespace RestAPI.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error To Update Interest");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error to update Employee");
+            }
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Employee>> DeleteEmployee(int id)
+        {
+            try
+            {
+                var EmpToDelete = await _empRepo.GetSingle(id);
+                if (EmpToDelete == null)
+                {
+                    return NotFound($"Employee with ID; {id} was not found...");
+                }
+                return await _empRepo.Delete(id);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                   "Error occured trying to delete Employee");
             }
         }
     }

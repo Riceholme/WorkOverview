@@ -46,9 +46,21 @@ namespace RestAPI.Services
                 .ToListAsync();
         }
 
-        public Task<IEnumerable<Project>> GetEmployeesOfProjectId(int id)
+        //public async Task<IEnumerable<Project>> GetEmployeesOfProjectId(int id)
+        //{
+        //    return await _projContext.Employees
+        //        .Include(p => p.)
+        //        .Where(p => p.ProjectId == id)
+        //        .ToListAsync();
+        //}
+
+        //Uppgift 2
+        public async Task<IEnumerable<TimeReport>> GetEmpsOfProjectId(int id)
         {
-            throw new NotImplementedException();
+            return await _projContext.TimeReports
+                .Include(p => p.Employee)
+                .Where(p => p.ProjectId == id)
+                .ToListAsync();
         }
 
         public async Task<Project> GetSingle(int id)
