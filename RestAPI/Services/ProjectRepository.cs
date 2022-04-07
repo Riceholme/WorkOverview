@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace RestAPI.Services
 {
@@ -15,19 +16,34 @@ namespace RestAPI.Services
             _projContext = projContext;
         }
 
-        public Task<Project> Add(Project newEntity)
+        public async Task<Project> Add(Project newProject)
         {
-            throw new NotImplementedException();
+            var result = await _projContext.Projects
+                .AddAsync(newProject);
+            await _projContext
+                .SaveChangesAsync();
+            return result.Entity;
         }
 
-        public Task<Project> Delete(int id)
+        public async Task<Project> Delete(int id)
         {
-            throw new NotImplementedException();
+            var result = await _projContext.Projects
+                .FirstOrDefaultAsync(p => p.ProjectId == id);
+            if (result != null)
+            {
+                _projContext.Projects
+                    .Remove(result);
+                await _projContext
+                    .SaveChangesAsync();
+                return result;
+            }
+            return null;
         }
 
-        public Task<IEnumerable<Project>> GetAll()
+        public async Task<IEnumerable<Project>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _projContext.Projects
+                .ToListAsync();
         }
 
         public Task<IEnumerable<Project>> GetEmployeesOfProjectId(int id)
@@ -35,14 +51,22 @@ namespace RestAPI.Services
             throw new NotImplementedException();
         }
 
-        public Task<Project> GetSingle(int id)
+        public async Task<Project> GetSingle(int id)
         {
-            throw new NotImplementedException();
+            return await _projContext.Projects
+                .FirstOrDefaultAsync(p => p.ProjectId == id);
         }
 
-        public Task<Project> Update(Project Entity)
+        public async Task<Project> Update(Project project)
         {
-            throw new NotImplementedException();
+            var result = await _projContext.Projects
+                .FirstOrDefaultAsync(p => p.ProjectId == project.ProjectId);
+            if (result != null)
+            {
+                result.ProjectName = project.ProjectName;
+                return result;
+            }
+            return null;
         }
     }
 }

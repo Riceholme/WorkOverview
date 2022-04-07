@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Models;
 using RestAPI.Model;
 using System;
 using System.Collections.Generic;
@@ -18,29 +19,55 @@ namespace RestAPI.Services
         {
             throw new NotImplementedException();
         }
-        public Task<TimeReport> Add(TimeReport newEntity)
+        public async Task<TimeReport> Add(TimeReport newTimeRep)
         {
-            throw new NotImplementedException();
+            var result = await _timRepContext.TimeReports
+                .AddAsync(newTimeRep);
+            await _timRepContext
+                .SaveChangesAsync();
+            return result.Entity;
         }
 
-        public Task<TimeReport> Delete(int id)
+        public async Task<TimeReport> Delete(int id)
         {
-            throw new NotImplementedException();
+            var result = await _timRepContext.TimeReports
+                .FirstOrDefaultAsync(p => p.TimeReportId == id);
+            if (result != null)
+            {
+                _timRepContext.TimeReports
+                    .Remove(result);
+                await _timRepContext
+                    .SaveChangesAsync();
+                return result;
+            }
+            return null;
         }
 
-        public Task<IEnumerable<TimeReport>> GetAll()
+        public async Task<IEnumerable<TimeReport>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _timRepContext.TimeReports
+                .ToListAsync();
         }
 
-        public Task<TimeReport> GetSingle(int id)
+        public async Task<TimeReport> GetSingle(int id)
         {
-            throw new NotImplementedException();
+            return await _timRepContext.TimeReports
+                .FirstOrDefaultAsync(p => p.TimeReportId == id);
         }
 
-        public Task<TimeReport> Update(TimeReport Entity)
+        public async Task<TimeReport> Update(TimeReport timeReport)
         {
-            throw new NotImplementedException();
+            var result = await _timRepContext.TimeReports
+                .FirstOrDefaultAsync(p => p.TimeReportId == timeReport.TimeReportId);
+            if (result != null)
+            {
+                result.WeekNumber = timeReport.WeekNumber;
+                result.HoursWorked = timeReport.HoursWorked;
+                result.EmployeeId = timeReport.EmployeeId;
+                result.ProjectId = timeReport.ProjectId;
+                return result;
+            }
+            return null;
         }
     }
 }
