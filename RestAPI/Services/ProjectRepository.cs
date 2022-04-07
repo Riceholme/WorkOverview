@@ -30,7 +30,7 @@ namespace RestAPI.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Project>> GetAllEmpByProjectId(int id)
+        public Task<IEnumerable<Project>> GetEmployeesOfProjectId(int id)
         {
             throw new NotImplementedException();
         }

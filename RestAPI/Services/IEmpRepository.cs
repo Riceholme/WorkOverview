@@ -8,8 +8,10 @@ namespace RestAPI.Services
     public interface IEmpRepository<T>
     {
         Task<T> GetSingle(int id);
+        //Uppgift 1
+        Task<IEnumerable<T>> GetPersonIncludeTimeReports(int id);
+        //Uppgift 1a
         Task<IEnumerable<T>> GetAll();
-        Task<IEnumerable<T>> HoursWorkByEmpIdAndWeek(int id, int week);
         Task<T> Add(T newEntity);
         Task<T> Update(T Entity);
         Task<T> Delete(int id);

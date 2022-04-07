@@ -14,7 +14,10 @@ namespace RestAPI.Services
         {
             _timRepContext = timRepContext;
         }
-
+        public Task<IEnumerable<TimeReport>> HoursWorkByEmpIdAndWeek(int id, int week)
+        {
+            throw new NotImplementedException();
+        }
         public Task<TimeReport> Add(TimeReport newEntity)
         {
             throw new NotImplementedException();

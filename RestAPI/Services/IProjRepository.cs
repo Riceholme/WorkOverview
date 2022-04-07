@@ -9,7 +9,8 @@ namespace RestAPI.Services
     {
         Task<T> GetSingle(int id);
         Task<IEnumerable<T>> GetAll();
-        Task<IEnumerable<T>> GetAllEmpByProjectId(int id);
+        //Uppgift 2
+        Task<IEnumerable<T>> GetEmployeesOfProjectId(int id);
         Task<T> Add(T newEntity);
         Task<T> Update(T Entity);
         Task<T> Delete(int id);

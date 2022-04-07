@@ -30,12 +30,12 @@ namespace RestAPI.Services
             throw new NotImplementedException();
         }
 
-        public Task<Employee> GetSingle(int id)
+        public Task<IEnumerable<Employee>> GetPersonIncludeTimeReports(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Employee>> HoursWorkByEmpIdAndWeek(int id, int week)
+        public Task<Employee> GetSingle(int id)
         {
             throw new NotImplementedException();
         }
