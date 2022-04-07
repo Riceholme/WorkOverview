@@ -45,11 +45,6 @@ namespace RestAPI.Services
             return await _empContext.Employees.ToListAsync();
         }
 
-        public Task<IEnumerable<Employee>> GetPersonIncludeTimeReports(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Employee> GetSingle(int id)
         {
             return await _empContext.Employees

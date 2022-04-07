@@ -11,6 +11,8 @@ namespace RestAPI.Services
         Task<IEnumerable<T>> GetAll();
         //Uppgift 3
         Task<IEnumerable<T>> HoursWorkByEmpIdAndWeek(int id, int week);
+        //Uppgift 1
+        Task<IEnumerable<T>> GetTimeReportsByEmpId(int id);
         Task<T> Add(T newEntity);
         Task<T> Update(T Entity);
         Task<T> Delete(int id);
