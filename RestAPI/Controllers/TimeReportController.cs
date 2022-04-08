@@ -100,5 +100,23 @@ namespace RestAPI.Controllers
                                    "Error occured trying to delete time report");
             }
         }
+        [HttpGet]
+        [Route("MembersOfProject/{id}")]
+        public async Task<ActionResult<TimeReport>> EmpsOfProjectId(int id)
+        {
+            try
+            {
+                var result = await _timeRepRepo.GetTimeReportsByEmpId(id);
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                return NotFound($"No interests were found of that person");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error to get persons interests");
+            }
+        }
     }
 }

@@ -15,7 +15,14 @@ namespace RestAPI.Services
         {
             _projContext = projContext;
         }
-
+        //public async Task<IEnumerable<Project>> GetEmpsOfProjectId(int id)
+        //{
+        //    return await _projContext.TimeReports
+        //        .Include(p => p.ProjectId)
+        //        .Where(p => p.ProjectId == id)
+        //        .ToListAsync();
+        //}
+        
         public async Task<Project> Add(Project newProject)
         {
             var result = await _projContext.Projects
@@ -46,22 +53,7 @@ namespace RestAPI.Services
                 .ToListAsync();
         }
 
-        //public async Task<IEnumerable<Project>> GetEmployeesOfProjectId(int id)
-        //{
-        //    return await _projContext.Employees
-        //        .Include(p => p.)
-        //        .Where(p => p.ProjectId == id)
-        //        .ToListAsync();
-        //}
-
-        //Uppgift 2
-        public async Task<IEnumerable<TimeReport>> GetEmpsOfProjectId(int id)
-        {
-            return await _projContext.TimeReports
-                .Include(p => p.Employee)
-                .Where(p => p.ProjectId == id)
-                .ToListAsync();
-        }
+        
 
         public async Task<Project> GetSingle(int id)
         {

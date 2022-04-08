@@ -77,5 +77,12 @@ namespace RestAPI.Services
                 .Where(p => p.EmployeeId == id)
                 .ToListAsync();
         }
+        public async Task<IEnumerable<TimeReport>> GetEmpsOfProjectId(int id)
+        {
+            return await _timRepContext.TimeReports
+                .Include(p => p.Employee)
+                .Where(p => p.ProjectId == id)
+                .ToListAsync();
+        }
     }
 }
