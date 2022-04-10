@@ -15,10 +15,7 @@ namespace RestAPI.Services
         {
             _timRepContext = timRepContext;
         }
-        public Task<IEnumerable<TimeReport>> HoursWorkByEmpIdAndWeek(int id, int week)
-        {
-            throw new NotImplementedException();
-        }
+        
         public async Task<TimeReport> Add(TimeReport newTimeRep)
         {
             var result = await _timRepContext.TimeReports
@@ -82,6 +79,21 @@ namespace RestAPI.Services
             return await _timRepContext.TimeReports
                 .Include(p => p.Employee)
                 .Where(p => p.ProjectId == id)
+                .ToListAsync();
+        }
+        public async Task<int> WorkedHoursByWeekAndEmpIdtest(int id, int week)
+        {
+            var result = (from x in _timRepContext.TimeReports
+                          where x.EmployeeId == id && x.WeekNumber == week
+                          select x.HoursWorked).FirstOrDefaultAsync();
+
+            return await result;
+        }
+        public async Task<IEnumerable<TimeReport>> WorkedHoursByWeekAndEmpId(int id, int week)
+        {
+            return await _timRepContext.TimeReports
+                .Include(e=> e.Employee)
+                .Where(r => r.EmployeeId == id && r.WeekNumber == week)
                 .ToListAsync();
         }
     }

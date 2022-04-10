@@ -39,18 +39,15 @@ namespace RestAPI.Services
             }
             return null;
         }
-
         public async Task<IEnumerable<Employee>> GetAll()
         {
             return await _empContext.Employees.ToListAsync();
         }
-
         public async Task<Employee> GetSingle(int id)
         {
             return await _empContext.Employees
                 .FirstOrDefaultAsync(p => p.EmployeeId == id);
         }
-
         public async Task<Employee> Update(Employee employee)
         {
             var result = await _empContext.Employees

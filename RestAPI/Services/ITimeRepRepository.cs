@@ -9,11 +9,16 @@ namespace RestAPI.Services
     {
         Task<T> GetSingle(int id);
         Task<IEnumerable<T>> GetAll();
-        //Uppgift 3
-        Task<IEnumerable<T>> HoursWorkByEmpIdAndWeek(int id, int week);
+
         //Uppgift 1
         Task<IEnumerable<T>> GetTimeReportsByEmpId(int id);
+
+        //Uppgift 2
         Task<IEnumerable<T>> GetEmpsOfProjectId(int id);
+
+        //Uppgift 3
+        Task<IEnumerable<T>> WorkedHoursByWeekAndEmpId(int id, int week);
+        Task<int> WorkedHoursByWeekAndEmpIdtest(int id, int week);
         Task<T> Add(T newEntity);
         Task<T> Update(T Entity);
         Task<T> Delete(int id);

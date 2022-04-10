@@ -72,7 +72,7 @@ namespace RestAPI.Controllers
                 var timeRepToUpdate = await _timeRepRepo.GetSingle(id);
                 if (timeRepToUpdate == null)
                 {
-                    return NotFound($"Time report with ID: {id} was not found");
+                    return NotFound($"Time report with Id: {id} was not found");
                 }
                 return await _timeRepRepo.Update(timeReport);
             }
@@ -89,7 +89,7 @@ namespace RestAPI.Controllers
                 var timeRepToDelete = await _timeRepRepo.GetSingle(id);
                 if (timeRepToDelete == null)
                 {
-                    return NotFound($"Time report with ID; {id} was not found...");
+                    return NotFound($"Time report with id: {id} was not found...");
                 }
                 return await _timeRepRepo.Delete(id);
             }
@@ -102,7 +102,25 @@ namespace RestAPI.Controllers
         }
         [HttpGet]
         [Route("MembersOfProject/{id}")]
-        public async Task<ActionResult<TimeReport>> EmpsOfProjectId(int id)
+        public async Task<ActionResult<TimeReport>> EmpsByProjectId(int id)
+        {
+            try
+            {
+                var result = await _timeRepRepo.GetEmpsOfProjectId(id);
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                return NotFound($"Project id: {id} was not found...");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error to get employees projects");
+            }
+        }
+        [HttpGet]
+        [Route("ByPersonId/{id}")]
+        public async Task<ActionResult<TimeReport>> TimeReportsByEmpId(int id)
         {
             try
             {
@@ -111,11 +129,47 @@ namespace RestAPI.Controllers
                 {
                     return Ok(result);
                 }
-                return NotFound($"No interests were found of that person");
+                return NotFound($"Employee with id: {id} was not found...");
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error to get persons interests");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error to get employees time reports");
+            }
+        }
+        [HttpGet]
+        [Route("employeeid/{id:int}/week/{week:int}")]
+        public async Task<ActionResult<TimeReport>> WorkedHoursByWeekAndEmployeeId(int id, int week)
+        {
+            try
+            {
+                var result = await _timeRepRepo.WorkedHoursByWeekAndEmpId(id, week);
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                return NotFound($"Id; {id} and/or week: {week} was not found...");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error to get worked hours that week of the employee");
+            }
+        }
+        [HttpGet]
+        [Route("empid/{id:int}/week/{week:int}")]
+        public async Task<ActionResult<TimeReport>> WorkedHoursByWeekAndEmployeeIdtest(int id, int week)
+        {
+            try
+            {
+                var result = await _timeRepRepo.WorkedHoursByWeekAndEmpIdtest(id, week);
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                return NotFound($"Id; {id} and/or week: {week} was not found...");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error to get worked hours that week of the employee");
             }
         }
     }
